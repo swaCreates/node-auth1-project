@@ -25,7 +25,7 @@ export default function RegisterForm(props) {
         });
 
         axios
-        .post('http://localhost:5500/api/register', info)
+        .post('/api/register', info)
         .then(res => {
             console.log(res);
             props.history.push('/login')
