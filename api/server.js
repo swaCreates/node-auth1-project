@@ -23,7 +23,7 @@ server.use(session({
         httpOnly: true, // disallows js from reading our cookie contents
     },
     store: new KnexSessionStore({
-        knex: db_config, // configured instance of knex
+        knex: db_config, // grabs configured instance of knex
         createtable: true, // if a sessions table doesn't exist, create one automatically
     }),
 }));

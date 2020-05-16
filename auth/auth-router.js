@@ -14,7 +14,7 @@ router.post('/register', async (req, res, next) => {
         
         // checking if username already exists
         if(user){
-            return res.status(409).json({
+            return res.status(409).json({ // 409 stands for conflict
 				message: "Username is already taken",
 			});
         };
@@ -39,11 +39,11 @@ router.post('/login', async (req, res, next) => {
         }).first();
 
         if(!user){
-            res.status(401).json(authErr);
+            return res.status(401).json(authErr);
         };
 
         // since bcrypt hashes generate different results due to the salting,
-		// we rely on the magic internals to compare hashes rather than doing it
+		// we rely on the magic internals of bcrypt to compare hashes rather than doing it
         // manually with "!=="
         
         const validPswd= await bcrypt.compare(req.body.password, user.password); 
@@ -51,7 +51,7 @@ router.post('/login', async (req, res, next) => {
         // is the same as password saved in db
 
         if(!validPswd){
-            res.status(401).json(authErr);
+            return res.status(401).json(authErr);
         };
 
         // creates a new session for the user and saves it in memory.
